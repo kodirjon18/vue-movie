@@ -1,13 +1,13 @@
 <template>
   <ul class="movie-list list-group">
-    <MovieListItem/>
-    <MovieListItem/>
-    <MovieListItem/>
+    <MovieListItem v-for="movie in movies" v-bind="movie" :key="movie.id" />
   </ul>
 </template>
 <script setup>
-import MovieListItem from '../movie-list-item/MovieListItem.vue';
-
+import MovieListItem from "../movie-list-item/MovieListItem.vue";
+defineProps({
+  movies: Array,
+});
 </script>
 <style scoped>
 .movie-list {

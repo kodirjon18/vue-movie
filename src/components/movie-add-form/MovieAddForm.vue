@@ -1,18 +1,49 @@
 <template>
   <div class="movie-add-form">
     <h3>Yangi kino qoshish</h3>
-    <form class="add-form d-flex">
-      <input type="text" class="form-control new-movie-label" placeholder="Qanday kino?" />
+    <form class="add-form d-flex" @submit.prevent>
       <input
         type="text"
         class="form-control new-movie-label"
-        placeholder="Nechi marotaba ko'rilgan?"
+        placeholder="Qanday kino?"
+        :value="name"
+        @input="name = $event.target.value"
       />
-      <button class="btn btn-outline-dark" type="submit">Qo'shish</button>
+      <input
+        type="number"
+        class="form-control new-movie-label"
+        placeholder="Nechi marotaba ko'rilgan?"
+        :value="viewers"
+        @input="viewers = +$event.target.value"
+      />
+      <button class="btn btn-outline-dark" type="submit" @click="addMovie">Qo'shish</button>
     </form>
   </div>
 </template>
-<script></script>
+<script setup>
+import { ref } from "vue";
+
+const name = ref("");
+const viewers = ref('');
+
+const emit = defineEmits()
+
+const addMovie = () => {
+  const newMovie = {
+    name: name.value,
+    viewers: viewers.value,
+    favourite: false,
+    like: false,
+    id: new Date()
+  }
+
+  emit('createMovie', newMovie)
+};
+
+
+
+
+</script>
 <style scoped>
 .movie-add-form {
   margin-bottom: 2rem;

@@ -4,18 +4,52 @@ import SearchPanel from "../search-panel/SearchPanel.vue";
 import AppFilter from "../app-filter/AppFilter.vue";
 import MovieList from "../movie-list/MovieList.vue";
 import MovieAddForm from "../movie-add-form/MovieAddForm.vue";
+import { computed, ref } from "vue";
+
+const movies = ref([
+  {
+    name: "Omar",
+    viewers: 811,
+    favourite: false,
+    like: true,
+    id: 1,
+  },
+  {
+    name: "Emires of osman",
+    viewers: 411,
+    favourite: false,
+    like: false,
+    id: 2,
+  },
+  {
+    name: "Ertugrul",
+    viewers: 711,
+    favourite: true,
+    like: false,
+    id: 3,
+  },
+])
+
+const favouriteMovie = computed(() => {
+   return movies.value.filter(item => item.favourite).length
+})
+
+const handleCreateMovie = (movie) => {
+    movies.value.push(movie)
+}
+
 </script>
 
 <template>
   <div class="app font-monospace">
     <div class="content">
-      <AppInfo />
+      <AppInfo :allMoviesCount="movies.length" :allFavouriteCount="favouriteMovie"/>
       <div class="search-panel">
         <SearchPanel />
         <AppFilter />
       </div>
-      <MovieList />
-      <MovieAddForm />
+      <MovieList :movies="movies"/>
+      <MovieAddForm @createMovie="handleCreateMovie"/>
     </div>
   </div>
 </template>
