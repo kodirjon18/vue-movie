@@ -34,7 +34,7 @@ const addMovie = () => {
     viewers: viewers.value,
     favourite: false,
     like: false,
-    id: new Date()
+    id: Number(new Date())
   }
 
   emit('createMovie', newMovie)

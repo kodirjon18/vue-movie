@@ -1,7 +1,7 @@
 <template>
   <div>
     <li class="list-group-item d-flex justify-content-between" :class="[{ like: like }, {favourite: favourite}]">
-      <span class="list-group-item-label">{{ name }}</span>
+      <span @click="onLike" class="list-group-item-label">{{ name }}</span>
       <input type="number" class="list-group-item-input" v-bind:value="viewers" />
       <div class="d-flex justify-content-center align-items-center">
         <button type="button" class="btn-cookie btn-sm">
@@ -18,12 +18,18 @@
   </div>
 </template>
 <script setup>
-defineProps({
+const props = defineProps({
   name: String,
   viewers: Number,
   like: Boolean,
   favourite: Boolean,
+  id: Number,
 });
+const emit =  defineEmits()
+
+const onLike = () => {
+   emit('onLike', props.id)
+}
 </script>
 <style scoped>
 .list-group-item {

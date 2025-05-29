@@ -38,6 +38,16 @@ const handleCreateMovie = (movie) => {
     movies.value.push(movie)
 }
 
+const onLikeHandler = (id) => {
+    movies.value = movies.value.map(item => {
+        if(item.id === id) {
+            item.like = !item.like
+        }
+        return item
+    })
+    
+}
+
 </script>
 
 <template>
@@ -48,7 +58,7 @@ const handleCreateMovie = (movie) => {
         <SearchPanel />
         <AppFilter />
       </div>
-      <MovieList :movies="movies"/>
+      <MovieList :movies="movies" @onLike="onLikeHandler"/>
       <MovieAddForm @createMovie="handleCreateMovie"/>
     </div>
   </div>
