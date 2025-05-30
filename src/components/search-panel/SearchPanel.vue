@@ -1,12 +1,5 @@
 <template>
   <k-input class="search-input" placeholder="Kinolarni qidirish" v-model="term" @input="changeHendler"/>
-  <input
-    type="text"
-    class="form-control search-input"
-    placeholder="Kinolarni qidirish"
-    :value="term"
-    @input="changeHendler"
-  />
 </template>
 <script setup>
 import { ref } from "vue";

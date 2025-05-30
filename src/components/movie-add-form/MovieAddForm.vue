@@ -31,7 +31,6 @@ const addMovie = () => {
     viewers: Number(viewers.value),
     favourite: false,
     like: false,
-    id: Number(new Date()),
   };
 
   name.value = "";
