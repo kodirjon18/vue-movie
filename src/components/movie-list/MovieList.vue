@@ -1,6 +1,12 @@
 <template>
   <ul class="movie-list list-group">
-    <MovieListItem v-for="movie in movies" v-bind="movie" :key="movie.id" @onLike="$emit('onLike', movie.id)" />
+    <MovieListItem
+      v-for="movie in movies"
+      v-bind="movie"
+      :key="movie.id"
+      @onToggle="$emit('onToggle', $event)"
+      @onRemove="$emit('onRemove', $event)"
+    />
   </ul>
 </template>
 <script setup>

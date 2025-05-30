@@ -29,6 +29,8 @@ const viewers = ref('');
 const emit = defineEmits()
 
 const addMovie = () => {
+  if(!name.value || !viewers.value) return
+  
   const newMovie = {
     name: name.value,
     viewers: viewers.value,
@@ -36,6 +38,9 @@ const addMovie = () => {
     like: false,
     id: Number(new Date())
   }
+
+  name.value = ''
+  viewers.value = ''
 
   emit('createMovie', newMovie)
 };

@@ -1,7 +1,26 @@
 <template>
-  <input type="text" class="form-control search-input" placeholder="Kinolarni qidirish" />
+  <input
+    type="text"
+    class="form-control search-input"
+    placeholder="Kinolarni qidirish"
+    :value="term"
+    @input="changeHendler"
+  />
 </template>
-<script setup></script>
+<script setup>
+import { ref } from "vue";
+
+const term = ref('');
+
+const props = defineProps({
+  updateTermHandler: Function,
+});
+
+const changeHendler = e => {
+  term.value = e.target.value
+  props.updateTermHandler(term.value)
+}
+</script>
 <style scoped>
 .search-input {
   margin-bottom: 2rem;

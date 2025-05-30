@@ -28,38 +28,74 @@ const movies = ref([
     like: false,
     id: 3,
   },
-])
+]);
+
+const terms = ref("");
+const filters = ref("all");
 
 const favouriteMovie = computed(() => {
-   return movies.value.filter(item => item.favourite).length
-})
+  return movies.value.filter((item) => item.favourite).length;
+});
 
 const handleCreateMovie = (movie) => {
-    movies.value.push(movie)
-}
+  movies.value.push(movie);
+};
 
-const onLikeHandler = (id) => {
-    movies.value = movies.value.map(item => {
-        if(item.id === id) {
-            item.like = !item.like
-        }
-        return item
-    })
-    
-}
+const onToggleHandler = ({ id, prop }) => {
+  movies.value = movies.value.map((item) => {
+    if (item.id === id) {
+      return { ...item, [prop]: !item[prop] };
+    }
+    return item;
+  });
+};
 
+const onRemoveHendler = (id) => {
+  movies.value = movies.value.filter((item) => item.id !== id);
+};
+
+const onSearchHendler = (arr, term) => {
+  if (term.length === 0) {
+    return arr;
+  }
+
+  return arr.filter((item) => item.name.toLowerCase().indexOf(term) > -1);
+};
+
+const onFilterHandler = (arr, filter) => {
+  switch (filter) {
+    case "popular":
+      return arr.filter((item) => item.like);
+    case "mostViewer":
+      return arr.filter((item) => item.viewers > 500);
+    default:
+      return arr;
+  }
+};
+
+const updateTermHandler = (term) => {
+  terms.value = term;
+};
+
+const updateFilterHandler = (filter) => {
+  filters.value = filter
+}
 </script>
 
 <template>
   <div class="app font-monospace">
     <div class="content">
-      <AppInfo :allMoviesCount="movies.length" :allFavouriteCount="favouriteMovie"/>
+      <AppInfo :allMoviesCount="movies.length" :allFavouriteCount="favouriteMovie" />
       <div class="search-panel">
-        <SearchPanel />
-        <AppFilter />
+        <SearchPanel :updateTermHandler="updateTermHandler" />
+        <AppFilter :updateFilterHandler="updateFilterHandler" :filterName="filters"/>
       </div>
-      <MovieList :movies="movies" @onLike="onLikeHandler"/>
-      <MovieAddForm @createMovie="handleCreateMovie"/>
+      <MovieList
+        :movies="onFilterHandler(onSearchHendler(movies, terms), filters)"
+        @onToggle="onToggleHandler"
+        @onRemove="onRemoveHendler"
+      />
+      <MovieAddForm @createMovie="handleCreateMovie" />
     </div>
   </div>
 </template>

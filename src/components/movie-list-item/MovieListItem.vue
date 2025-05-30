@@ -1,13 +1,13 @@
 <template>
   <div>
     <li class="list-group-item d-flex justify-content-between" :class="[{ like: like }, {favourite: favourite}]">
-      <span @click="onLike" class="list-group-item-label">{{ name }}</span>
+      <span @click="$emit('onToggle', {id: id, prop: 'like'})" class="list-group-item-label">{{ name }}</span>
       <input type="number" class="list-group-item-input" v-bind:value="viewers" />
       <div class="d-flex justify-content-center align-items-center">
-        <button type="button" class="btn-cookie btn-sm">
+        <button type="button" class="btn-cookie btn-sm" @click="$emit('onToggle', {id: id, prop: 'favourite'})">
           <i class="fas fa-cookie"></i>
         </button>
-        <button type="button" class="btn-trash btn-sm">
+        <button type="button" class="btn-trash btn-sm" @click="$emit('onRemove', id)">
           <i class="fas fa-trash"></i>
         </button>
         <i class="fas fa-star"></i>
