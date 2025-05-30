@@ -1,60 +1,47 @@
 <template>
-  <div class="movie-add-form">
+  <box class="movie-add-form">
     <h3>Yangi kino qoshish</h3>
     <form class="add-form d-flex" @submit.prevent>
-      <input
-        type="text"
-        class="form-control new-movie-label"
-        placeholder="Qanday kino?"
-        :value="name"
-        @input="name = $event.target.value"
-      />
-      <input
+      <k-input class="new-movie-label" placeholder="Qanday kino?" v-model="name" />
+      <k-input
         type="number"
-        class="form-control new-movie-label"
+        class="new-movie-label"
         placeholder="Nechi marotaba ko'rilgan?"
-        :value="viewers"
-        @input="viewers = +$event.target.value"
+        v-model="viewers"
       />
-      <button class="btn btn-outline-dark" type="submit" @click="addMovie">Qo'shish</button>
+      <primary-button class="btn-outline-dark" type="submit" @click="addMovie"
+        >Qo'shish</primary-button
+      >
     </form>
-  </div>
+  </box>
 </template>
 <script setup>
 import { ref } from "vue";
 
 const name = ref("");
-const viewers = ref('');
+const viewers = ref("");
 
-const emit = defineEmits()
+const emit = defineEmits();
 
 const addMovie = () => {
-  if(!name.value || !viewers.value) return
-  
+  if (!name.value || !viewers.value) return;
+
   const newMovie = {
     name: name.value,
-    viewers: viewers.value,
+    viewers: Number(viewers.value),
     favourite: false,
     like: false,
-    id: Number(new Date())
-  }
+    id: Number(new Date()),
+  };
 
-  name.value = ''
-  viewers.value = ''
+  name.value = "";
+  viewers.value = "";
 
-  emit('createMovie', newMovie)
+  emit("createMovie", newMovie);
 };
-
-
-
-
 </script>
 <style scoped>
 .movie-add-form {
   margin-bottom: 2rem;
-  padding: 1.5rem;
-  background-color: #fcfaf5;
-  border-radius: 4px;
-  box-shadow: 15px 15px 15px rgba(0, 0, 0, 0.15);
 }
 </style>

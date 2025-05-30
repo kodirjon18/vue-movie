@@ -13,8 +13,6 @@
         <i class="fas fa-star"></i>
       </div>
     </li>
-    <!-- <li>Omar</li>
-    <li>Ertugrul</li> -->
   </div>
 </template>
 <script setup>

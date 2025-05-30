@@ -1,4 +1,5 @@
 <template>
+  <k-input class="search-input" placeholder="Kinolarni qidirish" v-model="term" @input="changeHendler"/>
   <input
     type="text"
     class="form-control search-input"
